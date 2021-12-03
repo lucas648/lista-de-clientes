@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>Digite os novos dados</h1>
+  <form
+    class="formulario"
+    [formGroup]="formCliente"
+    (ngSubmit)="enviarDados()"
+  >
+    <div class="formulario__container">
+      <input 
+        class="formulario__input" 
+        formControlName="nome" 
+        placeholder="Nome"
+      />
+      <input 
+        class="formulario__input" 
+        formControlName="idade" 
+        placeholder="Idade"
+      />
+      <input 
+        class="formulario__input" 
+        formControlName="cidade" 
+        placeholder="Cidade" 
+      />
+    </div>
+    <div class="formulario__botoes-container">
+      <button 
+        class="formulario__botao" 
+        type="submit"
+      >
+        Salvar
+      </button>
+      <button 
+        class="formulario__botao" 
+        (click)="voltarPagina()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

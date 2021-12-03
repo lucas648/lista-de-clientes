@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+.container{
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+ul{
+ list-style: none;
+ padding: 0;
+ display: grid;
+ grid-template-columns: repeat(5, 1fr);
+}
+
+@media(max-width: 768px){
+  ul{
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.paginas .ngx-pagination .current{
+  background-color: #000000;
+}

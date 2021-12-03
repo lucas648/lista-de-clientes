@@ -1,0 +1,24 @@
+<div class="container">
+    <h1>Lista de Clientes</h1>
+    <div class="lista__cabecalho">
+      <button class="lista__cabecalho--botao" (click)="organizarLista()">Nome</button>
+      <button class="lista__cabecalho--botao" (click)="organizarLista()">Idade</button>
+      <button class="lista__cabecalho--botao" (click)="organizarLista()">Cidade</button>
+    </div>
+    <div>
+        <ul>
+          <li class="lista__card" *ngFor="let cliente of listaClientes | paginate: { itemsPerPage: 10, currentPage: paginaAtual };">
+            <div>
+              <p class="lista__titulo">Nome:</p>
+              <p class="lista__texto">{{cliente.name}}</p>
+              <p class="lista__titulo">Idade:</p>
+              <p class="lista__texto">{{cliente.age}}</p>
+              <p class="lista__titulo">Cidade:</p>
+              <p class="lista__texto">{{cliente.city}}</p>
+            </div>
+            <button class="lista__button" (click)="editarCliente(cliente)">Editar</button>
+          </li>
+        </ul>
+        <pagination-controls class="paginas" (pageChange)="paginaAtual = $event"></pagination-controls>
+    </div>
+</div>
