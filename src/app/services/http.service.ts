@@ -29,7 +29,6 @@ export class HttpService {
   }
 
   put(dados: clientePOST){
-    console.log(dados.id)
     const url = `https://private-92a969-processoseletivo1.apiary-mock.com/customers/${dados.id}/`
     return from(this.http.put(url,dados)).pipe(
       map(retorno=>{

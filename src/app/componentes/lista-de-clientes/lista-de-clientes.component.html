@@ -1,13 +1,26 @@
 <div class="container">
     <h1>Lista de Clientes</h1>
     <div class="lista__cabecalho">
-      <button class="lista__cabecalho--botao" (click)="organizarLista()">Nome</button>
-      <button class="lista__cabecalho--botao" (click)="organizarLista()">Idade</button>
-      <button class="lista__cabecalho--botao" (click)="organizarLista()">Cidade</button>
+      <p>Pesquisar por:</p>
+      <div>
+        <input [(ngModel)]="nome" class="lista__cabecalho--botao" (ngModelChange)="buscarPorNome()" type="text" placeholder="Nome">
+      </div>
+      <div>
+        <input [(ngModel)]="idade" class="lista__cabecalho--botao" (ngModelChange)="buscarPorIdade()" type="text" placeholder="Idade">
+      </div>
+      <div>
+        <input [(ngModel)]="cidade" class="lista__cabecalho--botao" (ngModelChange)="buscarPorCidade()" type="text" placeholder="Cidade">
+      </div>
     </div>
-    <div>
+    <div class="lista__botoes">
+      <button class="lista__pesquisa" (click)="ordemAlfabetica('name')">Nome em Ordem Alfabética</button>
+      <button class="lista__pesquisa" (click)="ordemAlfabetica('age')">Idade menor para o maior</button>
+      <button class="lista__pesquisa" (click)="idadeMaiorMenor()">Idade maior para o menor</button>
+      <button class="lista__pesquisa" (click)="ordemAlfabetica('city')">Cidade em Ordem Alfabética</button>
+    </div>
+    <div *ngIf="listaClientes.length > 1">
         <ul>
-          <li class="lista__card" *ngFor="let cliente of listaClientes | paginate: { itemsPerPage: 10, currentPage: paginaAtual };">
+          <li class="lista__card" *ngFor="let cliente of listaClientes | paginate: { itemsPerPage: 10, currentPage: paginaAtual }; let i = index">
             <div>
               <p class="lista__titulo">Nome:</p>
               <p class="lista__texto">{{cliente.name}}</p>
@@ -16,9 +29,12 @@
               <p class="lista__titulo">Cidade:</p>
               <p class="lista__texto">{{cliente.city}}</p>
             </div>
-            <button class="lista__button" (click)="editarCliente(cliente)">Editar</button>
+            <button class="lista__button" (click)="editarCliente(i)">Editar</button>
           </li>
         </ul>
         <pagination-controls class="paginas" (pageChange)="paginaAtual = $event"></pagination-controls>
+    </div>
+    <div *ngIf="listaClientes.length == 0">
+      <h1>Nenhum resultado encontrado!</h1>
     </div>
 </div>

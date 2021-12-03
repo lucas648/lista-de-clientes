@@ -1,7 +1,10 @@
+import { adicionarClientes } from './../../store/actions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs';
 
 import { HttpService } from './../../services/http.service';
 
@@ -10,26 +13,34 @@ import { HttpService } from './../../services/http.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit{
 
   public formCliente: FormGroup;
   public clienteSelecionado: any;
+
+  private listaClientes$ = this.store.pipe(
+    select('lista')
+  );
+  private listaCliente: any;
+  private index: any;
 
   constructor(
     private builder: FormBuilder,
     private httpService: HttpService,
     private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private store: Store<{lista: any}>
   ) {
     this.formCliente = this.criarFormulario();
 
-    this.clienteSelecionado = this.route.getCurrentNavigation()?.extras.state;
+    this.index = this.route.getCurrentNavigation()?.extras.state;
+
+    this.selecionarCliente();
   }
 
-  ngOnInit() {
-    this.atribuirValoresAoForm(this.clienteSelecionado.cliente)
+  ngOnInit(){
+    this.atribuirValoresAoForm(this.clienteSelecionado)
   }
-
   
   private criarFormulario(): FormGroup {
     return this.builder.group({
@@ -41,16 +52,17 @@ export class FormComponent implements OnInit {
 
   enviarDados(){
     this.clienteSelecionado = {
-      id: this.clienteSelecionado.cliente.id,
+      id: this.clienteSelecionado.id,
       name: this.formCliente.get('nome')?.value,
       age: this.formCliente.get('idade')?.value,
       city: this.formCliente.get('cidade')?.value,
     };
 
     this.httpService.put(this.clienteSelecionado)
-      .subscribe(()=>{
-        this.voltarPagina(true);
-      });
+    .subscribe(()=>{
+      this.emitirAlerta()
+      this.voltarPagina();
+    });
   }
 
   atribuirValoresAoForm(dados: any){
@@ -68,8 +80,17 @@ export class FormComponent implements OnInit {
     )
   }
 
-  voltarPagina(sucesso? :boolean){
-    sucesso ? this.emitirAlerta() : null;
+  selecionarCliente(){
+    this.listaClientes$.pipe(
+      map(dado=>{
+        this.listaCliente = dado.lista;
+        this.clienteSelecionado =  dado.lista[this.index.cliente]
+      })
+    )
+    .subscribe()
+  }
+
+  voltarPagina(){
     this.route.navigate([''])
   }
 }

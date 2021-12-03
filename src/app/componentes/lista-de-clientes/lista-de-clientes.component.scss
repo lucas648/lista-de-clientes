@@ -4,7 +4,7 @@
     flex-wrap: nowrap;
     width: 100%;
     justify-content: space-around;
-
+    align-items: center;
     &--botao{
       width: 200px;
       height: 25px;
@@ -27,6 +27,15 @@
 
   &__button{
     width: -webkit-fill-available;
+    height: 25px;
+    background: none;
+    border-radius: 8px;
+  }
+  &__botoes{
+    margin-top: 20px;
+  }
+
+  &__pesquisa{
     height: 25px;
     background: none;
     border-radius: 8px;
