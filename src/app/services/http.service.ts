@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, from, map, throwError } from 'rxjs';
+import { catchError, from, map } from 'rxjs';
 
 import { clientePOST } from './../componentes/interfaces/interfaces';
 

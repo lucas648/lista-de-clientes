@@ -1,4 +1,4 @@
-import { adicionarClientes } from './../../store/actions';
+import { alterarCliente } from './../../store/actions';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,7 +21,6 @@ export class FormComponent implements OnInit{
   private listaClientes$ = this.store.pipe(
     select('lista')
   );
-  private listaCliente: any;
   private index: any;
 
   constructor(
@@ -60,6 +59,7 @@ export class FormComponent implements OnInit{
 
     this.httpService.put(this.clienteSelecionado)
     .subscribe(()=>{
+      this.store.dispatch(alterarCliente({index: this.index.cliente, usuario: this.clienteSelecionado}))
       this.emitirAlerta()
       this.voltarPagina();
     });
@@ -83,7 +83,6 @@ export class FormComponent implements OnInit{
   selecionarCliente(){
     this.listaClientes$.pipe(
       map(dado=>{
-        this.listaCliente = dado.lista;
         this.clienteSelecionado =  dado.lista[this.index.cliente]
       })
     )

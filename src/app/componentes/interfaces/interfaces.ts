@@ -11,3 +11,7 @@ export interface clientePOST {
   age: string,
   city: string
 }
+
+export interface clienteLista {
+  lista : clientePOST[]
+}

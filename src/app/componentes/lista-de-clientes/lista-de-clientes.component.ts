@@ -1,11 +1,8 @@
-import { DadosCliente, clientePOST } from './../interfaces/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-
-import { HttpService } from './../../services/http.service';
 import { select, Store } from '@ngrx/store';
-import { eventosLista } from 'src/app/store/enums';
-import { map, subscribeOn } from 'rxjs';
+
+import { clientePOST } from './../interfaces/interfaces';
 
 @Component({
   selector: 'app-lista-de-clientes',

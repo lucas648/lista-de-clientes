@@ -1,8 +1,8 @@
-import { HttpService } from './services/http.service';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { eventosLista } from './store/enums';
 import { adicionarClientes } from './store/actions';
+import { HttpService } from './services/http.service';
 
 @Component({
   selector: 'app-root',
